@@ -15,7 +15,6 @@ result1 = sum(num_lines1)
 
 # quiz2
 
-num_lines2 = []
 num_dict = {
     "one": 1,
     "two": 2,
@@ -27,14 +26,22 @@ num_dict = {
     "eight": 8,
     "nine": 9
 }
+num_lines2 = []
 
 for line in puzzle_lines:
     for key in num_dict:
-        if key in line:
-            print(f"input: {line}, num: {num_dict[key]}")
+        keys_in_line = True
+        while keys_in_line:
+            if key in line:
+                idx = line.index(key) + 1
+                line = line[:idx] + f'{num_dict.get(key)}' + line[idx:]
+            else:
+                keys_in_line = False
 
-    extracted_num = "".join(filter(str.isnumeric, line))
+    extracted_num = "".join(filter(str.isdigit, line))
     calibration_value = int(f"{extracted_num[:1]}{extracted_num[-1]}")
-    # print(f"input: {line}, value: {extracted_num}, output: {calibration_value}")
+    num_lines2.append(calibration_value)
+
+result2 = sum(num_lines2)
 
 puzzle_file.close()
